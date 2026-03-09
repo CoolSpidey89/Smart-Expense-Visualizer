@@ -44,6 +44,7 @@ export default function App() {
 ];
 
   const [budget, setBudget] = useState(10000);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-900 text-gray-900 dark:text-white p-8 space-y-8 transition-colors duration-500">
       <div className="flex justify-between items-center">
@@ -53,6 +54,30 @@ export default function App() {
         <ThemeToggle />
         <ExportPDF />
       </div>
+      </div>
+
+      <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-10 rounded-2xl text-center space-y-6">
+
+        <h1 className="text-4xl md:text-5xl font-bold">
+          Turn Your Expense Data Into
+          <span className="text-indigo-400"> Smart Financial Insights</span>
+        </h1>
+
+        <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          Upload a CSV of your expenses to instantly generate interactive charts,
+          spending forecasts, anomaly detection, and intelligent financial insights.
+        </p>
+
+        <div className="flex flex-col md:flex-row justify-center gap-4">
+          <a
+            href="/Trial.csv"
+            download
+            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-medium"
+          >
+            Download Sample CSV
+          </a>
+        </div>
+
       </div>
 
 
