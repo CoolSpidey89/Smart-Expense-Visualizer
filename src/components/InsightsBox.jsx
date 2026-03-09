@@ -1,5 +1,6 @@
 import { predictNextMonth } from "../utils/predictTrend";
 import { detectAnomalies } from "../utils/detectAnomalies";
+import { formatMonth } from "../utils/formatMonth";
 
 export default function InsightsBox({ stats }) {
   const highestMonth = Object.keys(stats.monthlyTotals).reduce((a, b) =>
@@ -15,7 +16,7 @@ export default function InsightsBox({ stats }) {
 
       <ul className="space-y-2 text-slate-300">
         <li>💡 {stats.topCategory} is your biggest expense category</li>
-        <li>📈 Highest spending month: {highestMonth}</li>
+        <li>📈 Highest spending month: {formatMonth(highestMonth)}</li>
         <li>
           💰 Average monthly spend: ₹
           {(stats.total / Object.keys(stats.monthlyTotals).length).toFixed(2)}
@@ -34,7 +35,7 @@ export default function InsightsBox({ stats }) {
             </li>
             {anomalies.map((a, i) => (
               <li key={i} className="text-red-300">
-                • {a.month} unusually high at ₹{a.value}
+                • {formatMonth(a.month)} unusually high at ₹{a.value}
               </li>
             ))}
           </>

@@ -1,4 +1,5 @@
 import { Line } from "react-chartjs-2";
+import { formatMonth } from "../utils/formatMonth";
 import {
   Chart as ChartJS,
   LineElement,
@@ -22,7 +23,7 @@ ChartJS.register(
 export default function LineChartView({ monthlyTotals }) {
   const prediction = predictNextMonth(monthlyTotals);
 
-  const labels = Object.keys(monthlyTotals);
+  const labels = Object.keys(monthlyTotals).map(formatMonth);
   const actualData = Object.values(monthlyTotals);
 
   const forecastLabels = prediction ? [...labels, "Next"] : labels;

@@ -4,15 +4,20 @@ export const calculateStats = (data) => {
   let monthlyTotals = {};
 
   data.forEach((item) => {
-    const amount = parseFloat(item.Amount);
-    const category = item.Category;
-    const month = item.Date.slice(0, 7);
+  const amount = parseFloat(item.Amount);
+  const category = item.Category;
 
-    total += amount;
+  const [day, month, year] = item.Date.split("-");
+  const monthKey = `${year}-${month}`;
 
-    categoryTotals[category] = (categoryTotals[category] || 0) + amount;
-    monthlyTotals[month] = (monthlyTotals[month] || 0) + amount;
-  });
+  total += amount;
+
+  categoryTotals[category] =
+    (categoryTotals[category] || 0) + amount;
+
+  monthlyTotals[monthKey] =
+    (monthlyTotals[monthKey] || 0) + amount;
+});
 
   const topCategory = Object.keys(categoryTotals).reduce((a, b) =>
     categoryTotals[a] > categoryTotals[b] ? a : b

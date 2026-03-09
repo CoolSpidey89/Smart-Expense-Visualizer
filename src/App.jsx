@@ -11,21 +11,23 @@ import BudgetBox from "./components/BudgetBox";
 import ThemeToggle from "./components/ThemeToggle";
 import ExportPDF from "./components/ExportPDF";
 import { useState, useEffect } from "react";
+import { getMonthKey } from "./utils/parseDate";
 
 export default function App() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState({ category: "", month: "" });
 
   const filteredData = data.filter((item) => {
-  const date = new Date(item.Date);
+  const [day, month, year] = item.Date.split("-");
+  const date = new Date(year, month - 1, day);
 
-  if (isNaN(date)) return false; // skip invalid rows
+  if (isNaN(date)) return false;
 
-  const month = date.toISOString().slice(0, 7);
+  const monthKey = date.toISOString().slice(0, 7);
 
   return (
     (!filter.category || item.Category === filter.category) &&
-    (!filter.month || month === filter.month)
+    (!filter.month || monthKey === filter.month)
   );
 });
 
@@ -34,14 +36,12 @@ export default function App() {
   const categories = [...new Set(data.map((d) => d.Category))];
   const months = [
   ...new Set(
-    data
-      .map((d) => {
-        const date = new Date(d.Date);
-        return isNaN(date) ? null : date.toISOString().slice(0, 7);
-      })
-      .filter(Boolean)
+    data.map((d) => {
+      const [day, month, year] = d.Date.split("-");
+      return `${year}-${month}`;
+    })
   ),
-];
+].sort();
 
   const [budget, setBudget] = useState(10000);
 
